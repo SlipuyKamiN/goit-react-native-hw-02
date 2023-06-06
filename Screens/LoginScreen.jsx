@@ -24,6 +24,8 @@ import { useState } from "react";
 const RegistrationScreen = () => {
   const [focusedInput, setFocusedInput] = useState(null);
   const [hidePassword, setHidePassword] = useState(true);
+  const [emailText, setEmailText] = useState("");
+  const [passwordText, setPasswordText] = useState("");
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -42,6 +44,8 @@ const RegistrationScreen = () => {
           onBlur={() => {
             setFocusedInput(null);
           }}
+          value={emailText}
+          onChangeText={setEmailText}
         />
         <PasswordInputWrapper>
           <Input
@@ -54,6 +58,8 @@ const RegistrationScreen = () => {
             onBlur={() => {
               setFocusedInput(null);
             }}
+            value={passwordText}
+            onChangeText={setPasswordText}
           />
           <ShowPasswordButton
             onPress={() => {
