@@ -23,6 +23,7 @@ import { useState } from "react";
 
 const RegistrationScreen = () => {
   const [focusedInput, setFocusedInput] = useState(null);
+  const [hidePassword, setHidePassword] = useState(true);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -44,7 +45,7 @@ const RegistrationScreen = () => {
         />
         <PasswordInputWrapper>
           <Input
-            secureTextEntry={true}
+            secureTextEntry={hidePassword}
             placeholder="Пароль"
             style={focusedInput === "Password" && styles.activeInput}
             onFocus={() => {
@@ -54,7 +55,11 @@ const RegistrationScreen = () => {
               setFocusedInput(null);
             }}
           />
-          <ShowPasswordButton>
+          <ShowPasswordButton
+            onPress={() => {
+              setHidePassword(!hidePassword);
+            }}
+          >
             <Text>Показати</Text>
           </ShowPasswordButton>
         </PasswordInputWrapper>

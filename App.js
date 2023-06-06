@@ -23,8 +23,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       <ImageBackground source={BgImagePath} style={styles.image}>
-        <RegistrationScreen />
-        {/* <LoginScreen /> */}
+        {/* <RegistrationScreen /> */}
+        <LoginScreen />
       </ImageBackground>
     </View>
   );
