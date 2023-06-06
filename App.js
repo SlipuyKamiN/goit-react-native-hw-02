@@ -1,7 +1,7 @@
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
-import LoginScreen from "./components/LoginScreen";
+import LoginScreen from "./Screens/LoginScreen";
 import BgImagePath from "./images/photo-bg.jpg";
-import RegistrationScreen from "./components/RegistrationScreen";
+import RegistrationScreen from "./Screens/RegistrationScreen";
 import {
   useFonts,
   Roboto_400Regular,
