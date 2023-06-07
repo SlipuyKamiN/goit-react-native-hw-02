@@ -52,11 +52,7 @@ const RegistrationScreen = () => {
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={{ flex: 1, height: "100%" }}
       > */}
-      <Form
-        style={{
-          marginTop: 263,
-        }}
-      >
+      <Form>
         <ImageWrapper>
           <AvatarImage />
           <AddButton>

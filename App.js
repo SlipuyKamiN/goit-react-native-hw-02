@@ -1,6 +1,7 @@
 import {
   ImageBackground,
   KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -27,26 +28,27 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <ImageBackground source={BgImagePath} style={styles.image}>
-        {/* <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-          // style={{ flex: 1, height: "100%", paddingTop: 260 }}
-        > */}
-        {/* <RegistrationScreen /> */}
-        <LoginScreen />
-        {/* </KeyboardAvoidingView> */}
-      </ImageBackground>
-    </View>
+    <ImageBackground source={BgImagePath} style={styles.image}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={{ flex: 1, paddingTop: 263 }}
+      >
+        <View style={styles.container}>
+          <RegistrationScreen />
+          {/* <LoginScreen /> */}
+        </View>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    height: "100%",
   },
   image: {
     flex: 1,
