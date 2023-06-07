@@ -6,6 +6,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -30,11 +32,29 @@ const RegistrationScreen = () => {
   const [emailText, setEmailText] = useState("");
   const [passwordText, setPasswordText] = useState("");
 
+  const submitData = {
+    loginText,
+    emailText,
+    passwordText,
+  };
+
+  const handleSubmit = () => {
+    if (loginText === "" || emailText === "" || passwordText === "") {
+      Alert.alert("Oops", "Please fill the folowing form");
+      return;
+    }
+    console.log(submitData);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      {/* <KeyboardAvoidingView // визначаємо ОС та налаштовуємо поведінку клавіатури
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={{ flex: 1, height: "100%" }}
+      > */}
       <Form
         style={{
-          marginTop: 147,
+          marginTop: 263,
         }}
       >
         <ImageWrapper>
@@ -90,11 +110,12 @@ const RegistrationScreen = () => {
             <Text>Показати</Text>
           </ShowPasswordButton>
         </PasswordInputWrapper>
-        <RegisterButton>
+        <RegisterButton onPress={handleSubmit}>
           <RegisterButtonText>Зареєструватися</RegisterButtonText>
         </RegisterButton>
         <LogInLink>Вже є акаунт? Увійти</LogInLink>
       </Form>
+      {/* </KeyboardAvoidingView> */}
     </TouchableWithoutFeedback>
   );
 };

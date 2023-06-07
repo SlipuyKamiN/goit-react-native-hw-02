@@ -6,6 +6,7 @@ import {
   Keyboard,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 
 import {
@@ -26,6 +27,19 @@ const RegistrationScreen = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [emailText, setEmailText] = useState("");
   const [passwordText, setPasswordText] = useState("");
+
+  const submitData = {
+    emailText,
+    passwordText,
+  };
+
+  const handleSubmit = () => {
+    if (emailText === "" || passwordText === "") {
+      Alert.alert("Oops", "Please fill the folowing form");
+      return;
+    }
+    console.log(submitData);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -69,7 +83,7 @@ const RegistrationScreen = () => {
             <Text>Показати</Text>
           </ShowPasswordButton>
         </PasswordInputWrapper>
-        <LogInButton>
+        <LogInButton onPress={handleSubmit}>
           <LogInButtonText>Увійти</LogInButtonText>
         </LogInButton>
         <RegisterLink>Немає акаунту? Зареєструватися</RegisterLink>
