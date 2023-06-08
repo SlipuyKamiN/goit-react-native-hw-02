@@ -21,6 +21,24 @@ const RegistrationScreen = () => {
   const [passwordText, setPasswordText] = useState(null);
   const keyboard = useKeyboard();
 
+  const {
+    form,
+    imageWrapper,
+    avatarImage,
+    addButton,
+    screenTitle,
+    input,
+    passwordInputWrapper,
+    showPasswordButton,
+    showPasswordButtonText,
+    registerButton,
+    registerButtonText,
+    logInLink,
+    activeInput,
+    errorMessage,
+    image,
+  } = styles;
+
   const submitData = {
     loginText,
     emailText,
@@ -53,7 +71,7 @@ const RegistrationScreen = () => {
   };
 
   return (
-    <ImageBackground source={BgImagePath} style={styles.image}>
+    <ImageBackground source={BgImagePath} style={image}>
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={{ flex: 1, width: "100%" }}
@@ -61,31 +79,31 @@ const RegistrationScreen = () => {
       >
         <View
           style={{
-            ...styles.form,
+            ...form,
             marginTop: keyboard.keyboardShown ? 147 : 263,
           }}
         >
-          <View style={styles.imageWrapper}>
-            <Image style={styles.avatarImage} />
-            <TouchableOpacity style={styles.addButton}>
+          <View style={imageWrapper}>
+            <Image style={avatarImage} />
+            <TouchableOpacity style={addButton}>
               <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
             </TouchableOpacity>
           </View>
-          <Text style={styles.screenTitle}>Реєстрація</Text>
+          <Text style={screenTitle}>Реєстрація</Text>
           {isEmpty("loginText") && (
-            <Text style={styles.errorMessage}>Login is a required field!</Text>
+            <Text style={errorMessage}>Login is a required field!</Text>
           )}
           <TextInput
             style={{
-              ...styles.input,
+              ...input,
               borderColor:
                 focusedInput === "Login"
-                  ? styles.activeInput.borderColor
-                  : styles.input.borderColor,
+                  ? activeInput.borderColor
+                  : input.borderColor,
               backgroundColor:
                 focusedInput === "Login"
-                  ? styles.activeInput.backgroundColor
-                  : styles.input.backgroundColor,
+                  ? activeInput.backgroundColor
+                  : input.backgroundColor,
             }}
             placeholder="Логін"
             onFocus={() => {
@@ -98,19 +116,19 @@ const RegistrationScreen = () => {
             onChangeText={setLoginText}
           />
           {isEmpty("emailText") && (
-            <Text style={styles.errorMessage}>Email is a required field!</Text>
+            <Text style={errorMessage}>Email is a required field!</Text>
           )}
           <TextInput
             style={{
-              ...styles.input,
+              ...input,
               borderColor:
                 focusedInput === "Email"
-                  ? styles.activeInput.borderColor
-                  : styles.input.borderColor,
+                  ? activeInput.borderColor
+                  : input.borderColor,
               backgroundColor:
                 focusedInput === "Email"
-                  ? styles.activeInput.backgroundColor
-                  : styles.input.backgroundColor,
+                  ? activeInput.backgroundColor
+                  : input.backgroundColor,
             }}
             placeholder="Адреса електронної пошти"
             onFocus={() => {
@@ -123,24 +141,22 @@ const RegistrationScreen = () => {
             onChangeText={setEmailText}
           />
           {isEmpty("passwordText") && (
-            <Text style={styles.errorMessage}>
-              Password is a required field!
-            </Text>
+            <Text style={errorMessage}>Password is a required field!</Text>
           )}
-          <View style={styles.passwordInputWrapper}>
+          <View style={passwordInputWrapper}>
             <TextInput
               secureTextEntry={hidePassword}
               placeholder="Пароль"
               style={{
-                ...styles.input,
+                ...input,
                 borderColor:
                   focusedInput === "Password"
-                    ? styles.activeInput.borderColor
-                    : styles.input.borderColor,
+                    ? activeInput.borderColor
+                    : input.borderColor,
                 backgroundColor:
                   focusedInput === "Password"
-                    ? styles.activeInput.backgroundColor
-                    : styles.input.backgroundColor,
+                    ? activeInput.backgroundColor
+                    : input.backgroundColor,
               }}
               onFocus={() => {
                 setFocusedInput("Password");
@@ -152,22 +168,19 @@ const RegistrationScreen = () => {
               onChangeText={setPasswordText}
             />
             <TouchableOpacity
-              style={styles.showPasswordButton}
+              style={showPasswordButton}
               onPress={() => {
                 setHidePassword(!hidePassword);
               }}
             >
-              <Text style={styles.showPasswordButtonText}>Показати</Text>
+              <Text style={showPasswordButtonText}>Показати</Text>
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity
-            style={styles.registerButton}
-            onPress={handleSubmit}
-          >
-            <Text style={styles.registerButtonText}>Зареєструватися</Text>
+          <TouchableOpacity style={registerButton} onPress={handleSubmit}>
+            <Text style={registerButtonText}>Зареєструватися</Text>
           </TouchableOpacity>
-          <Text style={styles.logInLink}>Вже є акаунт? Увійти</Text>
+          <Text style={logInLink}>Вже є акаунт? Увійти</Text>
         </View>
       </KeyboardAvoidingView>
     </ImageBackground>
