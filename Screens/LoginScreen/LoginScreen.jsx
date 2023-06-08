@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import BgImagePath from "../../images/photo-bg.jpg";
+import { useKeyboard } from "@react-native-community/hooks";
 import { useState } from "react";
 
 const RegistrationScreen = () => {
@@ -15,6 +16,7 @@ const RegistrationScreen = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [emailText, setEmailText] = useState(null);
   const [passwordText, setPasswordText] = useState(null);
+  const keyboard = useKeyboard();
 
   const submitData = {
     emailText,
@@ -47,9 +49,14 @@ const RegistrationScreen = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
-        keyboardVerticalOffset={-100}
+        keyboardVerticalOffset={-500}
       >
-        <View style={styles.form}>
+        <View
+          style={{
+            ...styles.form,
+            marginTop: keyboard.keyboardShown ? 147 : 263,
+          }}
+        >
           <Text style={styles.screenTitle}>Увійти</Text>
           {isEmpty("emailText") && (
             <Text style={styles.errorMessage}>Email is a required field!</Text>
@@ -229,6 +236,5 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     width: "100%",
-    paddingTop: 323,
   },
 });

@@ -11,6 +11,7 @@ import {
 import BgImagePath from "../../images/photo-bg.jpg";
 import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
+import { useKeyboard } from "@react-native-community/hooks";
 
 const RegistrationScreen = () => {
   const [focusedInput, setFocusedInput] = useState(null);
@@ -18,6 +19,7 @@ const RegistrationScreen = () => {
   const [loginText, setLoginText] = useState(null);
   const [emailText, setEmailText] = useState(null);
   const [passwordText, setPasswordText] = useState(null);
+  const keyboard = useKeyboard();
 
   const submitData = {
     loginText,
@@ -55,9 +57,14 @@ const RegistrationScreen = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={{ flex: 1, width: "100%" }}
-        keyboardVerticalOffset={-100}
+        keyboardVerticalOffset={-500}
       >
-        <View style={styles.form}>
+        <View
+          style={{
+            ...styles.form,
+            marginTop: keyboard.keyboardShown ? 147 : 263,
+          }}
+        >
           <View style={styles.imageWrapper}>
             <Image style={styles.avatarImage} />
             <TouchableOpacity style={styles.addButton}>
@@ -269,6 +276,5 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     width: "100%",
-    paddingTop: 323,
   },
 });
