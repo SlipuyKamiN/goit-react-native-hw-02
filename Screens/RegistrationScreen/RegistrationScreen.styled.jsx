@@ -72,6 +72,9 @@ export const ShowPasswordButton = styled.TouchableOpacity`
   position: absolute;
   top: 16px;
   right: 16px;
+`;
+
+export const ShowPasswordButtonText = styled.Text`
   font-size: 16px;
   color: #1b4371;
   font-family: "Roboto_400Regular";

@@ -47,6 +47,12 @@ export const ShowPasswordButton = styled.TouchableOpacity`
   font-family: "Roboto_400Regular";
 `;
 
+export const ShowPasswordButtonText = styled.Text`
+  font-size: 16px;
+  color: #1b4371;
+  font-family: "Roboto_400Regular";
+`;
+
 export const LogInButton = styled.TouchableOpacity`
   width: 343px;
   padding-top: 16px;
