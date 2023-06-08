@@ -1,26 +1,16 @@
 import {
+  Image,
   ImageBackground,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import BgImagePath from "../../images/photo-bg.jpg";
 import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
-import {
-  AddButton,
-  AvatarImage,
-  Input,
-  ScreenTitle,
-  Form,
-  ImageWrapper,
-  LogInLink,
-  PasswordInputWrapper,
-  RegisterButton,
-  RegisterButtonText,
-  ShowPasswordButton,
-  ShowPasswordButtonText,
-} from "./RegistrationScreen.styled";
 
 const RegistrationScreen = () => {
   const [focusedInput, setFocusedInput] = useState(null);
@@ -67,19 +57,29 @@ const RegistrationScreen = () => {
         style={{ flex: 1, width: "100%" }}
         keyboardVerticalOffset={-100}
       >
-        <Form>
-          <ImageWrapper>
-            <AvatarImage />
-            <AddButton>
+        <View style={styles.form}>
+          <View style={styles.imageWrapper}>
+            <Image style={styles.avatarImage} />
+            <TouchableOpacity style={styles.addButton}>
               <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
-            </AddButton>
-          </ImageWrapper>
-          <ScreenTitle>Реєстрація</ScreenTitle>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.screenTitle}>Реєстрація</Text>
           {isEmpty("loginText") && (
             <Text style={styles.errorMessage}>Login is a required field!</Text>
           )}
-          <Input
-            style={focusedInput === "Login" && styles.activeInput}
+          <TextInput
+            style={{
+              ...styles.input,
+              borderColor:
+                focusedInput === "Login"
+                  ? styles.activeInput.borderColor
+                  : styles.input.borderColor,
+              backgroundColor:
+                focusedInput === "Login"
+                  ? styles.activeInput.backgroundColor
+                  : styles.input.backgroundColor,
+            }}
             placeholder="Логін"
             onFocus={() => {
               setFocusedInput("Login");
@@ -93,8 +93,18 @@ const RegistrationScreen = () => {
           {isEmpty("emailText") && (
             <Text style={styles.errorMessage}>Email is a required field!</Text>
           )}
-          <Input
-            style={focusedInput === "Email" && styles.activeInput}
+          <TextInput
+            style={{
+              ...styles.input,
+              borderColor:
+                focusedInput === "Email"
+                  ? styles.activeInput.borderColor
+                  : styles.input.borderColor,
+              backgroundColor:
+                focusedInput === "Email"
+                  ? styles.activeInput.backgroundColor
+                  : styles.input.backgroundColor,
+            }}
             placeholder="Адреса електронної пошти"
             onFocus={() => {
               setFocusedInput("Email");
@@ -110,11 +120,21 @@ const RegistrationScreen = () => {
               Password is a required field!
             </Text>
           )}
-          <PasswordInputWrapper>
-            <Input
+          <View style={styles.passwordInputWrapper}>
+            <TextInput
               secureTextEntry={hidePassword}
               placeholder="Пароль"
-              style={focusedInput === "Password" && styles.activeInput}
+              style={{
+                ...styles.input,
+                borderColor:
+                  focusedInput === "Password"
+                    ? styles.activeInput.borderColor
+                    : styles.input.borderColor,
+                backgroundColor:
+                  focusedInput === "Password"
+                    ? styles.activeInput.backgroundColor
+                    : styles.input.backgroundColor,
+              }}
               onFocus={() => {
                 setFocusedInput("Password");
               }}
@@ -124,20 +144,24 @@ const RegistrationScreen = () => {
               value={passwordText}
               onChangeText={setPasswordText}
             />
-            <ShowPasswordButton
+            <TouchableOpacity
+              style={styles.showPasswordButton}
               onPress={() => {
                 setHidePassword(!hidePassword);
               }}
             >
-              <ShowPasswordButtonText>Показати</ShowPasswordButtonText>
-            </ShowPasswordButton>
-          </PasswordInputWrapper>
+              <Text style={styles.showPasswordButtonText}>Показати</Text>
+            </TouchableOpacity>
+          </View>
 
-          <RegisterButton onPress={handleSubmit}>
-            <RegisterButtonText>Зареєструватися</RegisterButtonText>
-          </RegisterButton>
-          <LogInLink>Вже є акаунт? Увійти</LogInLink>
-        </Form>
+          <TouchableOpacity
+            style={styles.registerButton}
+            onPress={handleSubmit}
+          >
+            <Text style={styles.registerButtonText}>Зареєструватися</Text>
+          </TouchableOpacity>
+          <Text style={styles.logInLink}>Вже є акаунт? Увійти</Text>
+        </View>
       </KeyboardAvoidingView>
     </ImageBackground>
   );
@@ -146,6 +170,93 @@ const RegistrationScreen = () => {
 export default RegistrationScreen;
 
 const styles = StyleSheet.create({
+  form: {
+    position: "relative",
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingTop: 92,
+  },
+  imageWrapper: {
+    position: "absolute",
+    transform: [{ translateY: -60 }],
+    top: 0,
+  },
+  avatarImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 16,
+    backgroundColor: "#f6f6f6",
+  },
+  addButton: {
+    position: "absolute",
+    width: 25,
+    height: 25,
+    right: 0,
+    top: "60%",
+    transform: [{ translateX: 12.5 }],
+    backgroundColor: "transparent",
+    borderRadius: 25,
+    textAlign: "center",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  screenTitle: {
+    fontSize: 30,
+    fontWeight: 500,
+    lineHeight: 35,
+    marginBottom: 33,
+    fontFamily: "Roboto_400Regular",
+  },
+  input: {
+    width: 343,
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#E8E8E8",
+    borderRadius: 8,
+    backgroundColor: "#f6f6f6",
+    marginBottom: 16,
+    padding: 16,
+    fontFamily: "Roboto_400Regular",
+  },
+  passwordInputWrapper: {
+    position: "relative",
+    marginBottom: 43,
+  },
+  showPasswordButton: {
+    position: "absolute",
+    top: 16,
+    right: 16,
+  },
+  showPasswordButtonText: {
+    fontSize: 16,
+    color: "#1B4371",
+    fontFamily: "Roboto_400Regular",
+  },
+  registerButton: {
+    width: 343,
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginBottom: 16,
+    borderRadius: 100,
+    backgroundColor: "#FF6C00",
+  },
+  registerButtonText: {
+    textAlign: "center",
+    lineHeight: 19,
+    fontSize: 16,
+    color: "#ffffff",
+    fontFamily: "Roboto_400Regular",
+  },
+  logInLink: {
+    fontSize: 16,
+    lineHeight: 19,
+    color: "#1B4371",
+    fontFamily: "Roboto_400Regular",
+  },
   activeInput: {
     borderColor: "#FF6C00",
     backgroundColor: "#ffffff",
@@ -158,6 +269,6 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     width: "100%",
-    paddingTop: 263,
+    paddingTop: 323,
   },
 });
