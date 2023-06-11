@@ -8,7 +8,6 @@ import {
   View,
 } from "react-native";
 import BgImagePath from "../images/photo-bg.jpg";
-import { useKeyboard } from "@react-native-community/hooks";
 import { useState } from "react";
 
 const RegistrationScreen = () => {
