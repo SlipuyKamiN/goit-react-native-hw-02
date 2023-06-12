@@ -11,6 +11,7 @@ import {
 import BgImagePath from "../images/photo-bg.jpg";
 import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const RegistrationScreen = () => {
   const [focusedInput, setFocusedInput] = useState(null);
@@ -18,6 +19,7 @@ const RegistrationScreen = () => {
   const [loginText, setLoginText] = useState(null);
   const [emailText, setEmailText] = useState(null);
   const [passwordText, setPasswordText] = useState(null);
+  const navigation = useNavigation();
 
   const submitData = {
     loginText,
@@ -40,6 +42,7 @@ const RegistrationScreen = () => {
     }
 
     console.log(submitData);
+    navigation.navigate("Home");
     setLoginText(null);
     setEmailText(null);
     setPasswordText(null);
@@ -136,7 +139,16 @@ const RegistrationScreen = () => {
           >
             <Text style={styles.registerButtonText}>Зареєструватися</Text>
           </TouchableOpacity>
-          <Text style={styles.logInLink}>Вже є акаунт? Увійти</Text>
+          <Text style={styles.logInLink}>
+            Немає акаунту?
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Login");
+              }}
+            >
+              <Text style={styles.logInLink}>Увійти</Text>
+            </TouchableOpacity>
+          </Text>
         </View>
       </KeyboardAvoidingView>
     </ImageBackground>

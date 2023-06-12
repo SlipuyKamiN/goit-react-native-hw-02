@@ -1,20 +1,24 @@
 import {
   ImageBackground,
+  Keyboard,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import BgImagePath from "../images/photo-bg.jpg";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const RegistrationScreen = () => {
   const [focusedInput, setFocusedInput] = useState(null);
   const [hidePassword, setHidePassword] = useState(true);
   const [emailText, setEmailText] = useState(null);
   const [passwordText, setPasswordText] = useState(null);
+  const navigation = useNavigation();
 
   const submitData = {
     emailText,
@@ -33,6 +37,7 @@ const RegistrationScreen = () => {
     }
 
     console.log(submitData);
+    navigation.navigate("Home");
     setEmailText(null);
     setPasswordText(null);
   };
@@ -101,7 +106,14 @@ const RegistrationScreen = () => {
             <Text style={styles.logInButtonText}>Увійти</Text>
           </TouchableOpacity>
           <Text style={styles.registerLink}>
-            Немає акаунту? Зареєструватися
+            Немає акаунту?
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Registration");
+              }}
+            >
+              <Text style={styles.registerLink}>Зареєструватися</Text>
+            </TouchableOpacity>
           </Text>
         </View>
       </KeyboardAvoidingView>
