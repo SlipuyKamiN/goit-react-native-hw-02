@@ -3,12 +3,12 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const LogOutButton = () => {
+const LogOutButton = ({ style = {} }) => {
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
-      style={styles.logOutButton}
+      style={[styles.logOutButton, style]}
       onPress={() => {
         navigation.navigate("Login");
       }}

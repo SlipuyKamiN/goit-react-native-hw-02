@@ -61,6 +61,7 @@ const Home = () => {
           tabBarIcon: ({ color, size }) => (
             <Feather name="user" size={size} color={color} />
           ),
+          headerShown: false,
         }}
       />
     </Tabs.Navigator>
