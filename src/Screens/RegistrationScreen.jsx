@@ -1,6 +1,7 @@
 import {
   Image,
   ImageBackground,
+  Keyboard,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
@@ -12,6 +13,7 @@ import BgImagePath from "../images/photo-bg.jpg";
 import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const RegistrationScreen = () => {
   const [focusedInput, setFocusedInput] = useState(null);
@@ -49,6 +51,7 @@ const RegistrationScreen = () => {
   };
 
   return (
+    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <ImageBackground source={BgImagePath} style={styles.image}>
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -139,19 +142,17 @@ const RegistrationScreen = () => {
           >
             <Text style={styles.registerButtonText}>Зареєструватися</Text>
           </TouchableOpacity>
-          <Text style={styles.logInLink}>
-            Немає акаунту?
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Login");
-              }}
-            >
-              <Text style={styles.logInLink}>Увійти</Text>
-            </TouchableOpacity>
-          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Login");
+            }}
+          >
+            <Text style={styles.logInLink}>Немає акаунту? Увійти</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </ImageBackground>
+    // </TouchableWithoutFeedback>
   );
 };
 

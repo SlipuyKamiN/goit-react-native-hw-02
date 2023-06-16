@@ -30,20 +30,22 @@ const posts = [
 
 const PostsScreen = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.userWrapper}>
-        <Image style={styles.avatarImage} />
-        <View>
-          <Text style={styles.userName}>Natali Romanova</Text>
-          <Text style={styles.userEmail}>email@example.com</Text>
+    <>
+      <View style={styles.container}>
+        <View style={styles.userWrapper}>
+          <Image style={styles.avatarImage} />
+          <View>
+            <Text style={styles.userName}>Natali Romanova</Text>
+            <Text style={styles.userEmail}>email@example.com</Text>
+          </View>
         </View>
+        <FlatList
+          data={posts}
+          renderItem={({ item }) => <Post item={item} />}
+          keyExtractor={(item) => item.id}
+        ></FlatList>
       </View>
-      <FlatList
-        data={posts}
-        renderItem={({ item }) => <Post item={item} />}
-        keyExtractor={(item) => item.id}
-      ></FlatList>
-    </View>
+    </>
   );
 };
 

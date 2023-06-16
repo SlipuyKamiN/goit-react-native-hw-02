@@ -4,6 +4,7 @@ import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import LogOutButton from "../components/LogOutButton";
 import BgImagePath from "../images/photo-bg.jpg";
 import ProfilePost from "../components/ProfilePost";
+import { Pressable } from "react-native";
 
 const posts = [
   {

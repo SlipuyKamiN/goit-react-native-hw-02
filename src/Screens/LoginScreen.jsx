@@ -43,6 +43,7 @@ const RegistrationScreen = () => {
   };
 
   return (
+    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <ImageBackground source={BgImagePath} style={styles.image}>
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -105,19 +106,19 @@ const RegistrationScreen = () => {
           <TouchableOpacity style={styles.logInButton} onPress={handleSubmit}>
             <Text style={styles.logInButtonText}>Увійти</Text>
           </TouchableOpacity>
-          <Text style={styles.registerLink}>
-            Немає акаунту?
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Registration");
-              }}
-            >
-              <Text style={styles.registerLink}>Зареєструватися</Text>
-            </TouchableOpacity>
-          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Registration");
+            }}
+          >
+            <Text style={styles.registerLink}>
+              Немає акаунту? Зареєструватися
+            </Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </ImageBackground>
+    // </TouchableWithoutFeedback>
   );
 };
 
@@ -188,6 +189,8 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     color: "#1B4371",
     fontFamily: "Roboto_400Regular",
+    flexDirection: "row",
+    alignItems: "flex-end",
   },
   activeInput: {
     borderColor: "#FF6C00",

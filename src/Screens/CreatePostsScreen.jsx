@@ -1,13 +1,17 @@
-import { Image } from "react-native";
+import { Image, Keyboard } from "react-native";
 import { Touchable } from "react-native";
 import { TextInput } from "react-native";
 import { View } from "react-native";
 import { Text } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 const CreatePostsScreen = () => {
   return (
+    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
       <View>
         <TouchableOpacity style={styles.loadImage}>
@@ -43,6 +47,7 @@ const CreatePostsScreen = () => {
         <Feather name="trash-2" size={24} color="#DADADA" />
       </TouchableOpacity>
     </View>
+    // </TouchableWithoutFeedback>
   );
 };
 
