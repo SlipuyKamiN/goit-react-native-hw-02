@@ -7,13 +7,13 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import BgImagePath from "../images/photo-bg.jpg";
 import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const RegistrationScreen = () => {
   const [focusedInput, setFocusedInput] = useState(null);
@@ -52,10 +52,7 @@ const RegistrationScreen = () => {
 
   return (
     <ImageBackground source={BgImagePath} style={styles.image}>
-      <TouchableWithoutFeedback
-        onPress={Keyboard.dismiss}
-        style={{ borderWidth: 100 }}
-      >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
           style={styles.screenWrapper}

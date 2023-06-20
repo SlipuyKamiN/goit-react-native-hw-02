@@ -60,6 +60,7 @@ const Home = () => {
                 onPress={() => {
                   navigation.navigate("Posts");
                 }}
+                style={{ marginLeft: 16 }}
               >
                 <Feather name="arrow-left" size={24} color="black" />
               </TouchableOpacity>
