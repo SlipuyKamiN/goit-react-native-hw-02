@@ -54,6 +54,17 @@ const Home = () => {
           tabBarIcon: ({ color }) => (
             <AntDesign name="plus" size={16} color={color} />
           ),
+          headerLeft: () => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("Posts");
+                }}
+              >
+                <Feather name="arrow-left" size={24} color="black" />
+              </TouchableOpacity>
+            );
+          },
         }}
       />
       <Tabs.Screen

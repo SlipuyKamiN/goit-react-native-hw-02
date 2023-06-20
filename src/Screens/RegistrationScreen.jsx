@@ -51,108 +51,115 @@ const RegistrationScreen = () => {
   };
 
   return (
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <ImageBackground source={BgImagePath} style={styles.image}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
-        style={styles.screenWrapper}
-        keyboardVerticalOffset={-500}
+      <TouchableWithoutFeedback
+        onPress={Keyboard.dismiss}
+        style={{ borderWidth: 100 }}
       >
-        <View style={styles.form}>
-          <View style={styles.imageWrapper}>
-            <Image style={styles.avatarImage} />
-            <TouchableOpacity style={styles.addButton}>
-              <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.screenTitle}>Реєстрація</Text>
-          {isEmpty("loginText") && (
-            <Text style={styles.errorMessage}>Login is a required field!</Text>
-          )}
-          <TextInput
-            style={[
-              styles.input,
-              focusedInput === "Login" && styles.activeInput,
-            ]}
-            placeholder="Логін"
-            onFocus={() => {
-              setFocusedInput("Login");
-            }}
-            onBlur={() => {
-              setFocusedInput(null);
-            }}
-            value={loginText}
-            onChangeText={setLoginText}
-          />
-          {isEmpty("emailText") && (
-            <Text style={styles.errorMessage}>Email is a required field!</Text>
-          )}
-          <TextInput
-            style={[
-              styles.input,
-              focusedInput === "Email" && styles.activeInput,
-            ]}
-            placeholder="Адреса електронної пошти"
-            onFocus={() => {
-              setFocusedInput("Email");
-            }}
-            onBlur={() => {
-              setFocusedInput(null);
-            }}
-            value={emailText}
-            onChangeText={setEmailText}
-          />
-          {isEmpty("passwordText") && (
-            <Text style={styles.errorMessage}>
-              Password is a required field!
-            </Text>
-          )}
-          <View style={styles.passwordInputWrapper}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          style={styles.screenWrapper}
+          keyboardVerticalOffset={-500}
+        >
+          <View style={styles.form}>
+            <View style={styles.imageWrapper}>
+              <Image style={styles.avatarImage} />
+              <TouchableOpacity style={styles.addButton}>
+                <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.screenTitle}>Реєстрація</Text>
+            {isEmpty("loginText") && (
+              <Text style={styles.errorMessage}>
+                Login is a required field!
+              </Text>
+            )}
             <TextInput
-              secureTextEntry={hidePassword}
-              placeholder="Пароль"
               style={[
                 styles.input,
-                focusedInput === "Password" && styles.activeInput,
+                focusedInput === "Login" && styles.activeInput,
               ]}
+              placeholder="Логін"
               onFocus={() => {
-                setFocusedInput("Password");
+                setFocusedInput("Login");
               }}
               onBlur={() => {
                 setFocusedInput(null);
               }}
-              value={passwordText}
-              onChangeText={setPasswordText}
+              value={loginText}
+              onChangeText={setLoginText}
             />
+            {isEmpty("emailText") && (
+              <Text style={styles.errorMessage}>
+                Email is a required field!
+              </Text>
+            )}
+            <TextInput
+              style={[
+                styles.input,
+                focusedInput === "Email" && styles.activeInput,
+              ]}
+              placeholder="Адреса електронної пошти"
+              onFocus={() => {
+                setFocusedInput("Email");
+              }}
+              onBlur={() => {
+                setFocusedInput(null);
+              }}
+              value={emailText}
+              onChangeText={setEmailText}
+            />
+            {isEmpty("passwordText") && (
+              <Text style={styles.errorMessage}>
+                Password is a required field!
+              </Text>
+            )}
+            <View style={styles.passwordInputWrapper}>
+              <TextInput
+                secureTextEntry={hidePassword}
+                placeholder="Пароль"
+                style={[
+                  styles.input,
+                  focusedInput === "Password" && styles.activeInput,
+                ]}
+                onFocus={() => {
+                  setFocusedInput("Password");
+                }}
+                onBlur={() => {
+                  setFocusedInput(null);
+                }}
+                value={passwordText}
+                onChangeText={setPasswordText}
+              />
+              <TouchableOpacity
+                style={styles.showPasswordButton}
+                onPress={() => {
+                  setHidePassword(!hidePassword);
+                }}
+              >
+                <Text style={styles.showPasswordButtonText}>
+                  {hidePassword ? "Показати" : "Приховати"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
             <TouchableOpacity
-              style={styles.showPasswordButton}
+              style={styles.registerButton}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.registerButtonText}>Зареєструватися</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
               onPress={() => {
-                setHidePassword(!hidePassword);
+                navigation.navigate("Login");
               }}
             >
-              <Text style={styles.showPasswordButtonText}>
-                {hidePassword ? "Показати" : "Приховати"}
-              </Text>
+              <Text style={styles.logInLink}>Немає акаунту? Увійти</Text>
             </TouchableOpacity>
           </View>
-
-          <TouchableOpacity
-            style={styles.registerButton}
-            onPress={handleSubmit}
-          >
-            <Text style={styles.registerButtonText}>Зареєструватися</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Login");
-            }}
-          >
-            <Text style={styles.logInLink}>Немає акаунту? Увійти</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </ImageBackground>
-    // </TouchableWithoutFeedback>
   );
 };
 
