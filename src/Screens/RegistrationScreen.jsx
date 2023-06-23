@@ -44,7 +44,10 @@ const RegistrationScreen = () => {
     }
 
     console.log(submitData);
-    navigation.navigate("Home");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "BottomTabNavigation" }],
+    });
     setLoginText(null);
     setEmailText(null);
     setPasswordText(null);

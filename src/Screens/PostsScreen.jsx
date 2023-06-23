@@ -3,6 +3,8 @@ import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
 import { FlatList } from "react-native-gesture-handler";
 import Post from "../components/Post";
+import { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const posts = [
   {
@@ -27,25 +29,26 @@ const posts = [
     location: "Ukraine",
   },
 ];
-
 const PostsScreen = () => {
   return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.userWrapper}>
-          <Image style={styles.avatarImage} />
-          <View>
-            <Text style={styles.userName}>Natali Romanova</Text>
-            <Text style={styles.userEmail}>email@example.com</Text>
+    <FlatList
+      style={styles.container}
+      showsVerticalScrollIndicator={false}
+      ListHeaderComponent={
+        <>
+          <View style={styles.userWrapper}>
+            <Image style={styles.avatarImage} />
+            <View>
+              <Text style={styles.userName}>Natali Romanova</Text>
+              <Text style={styles.userEmail}>email@example.com</Text>
+            </View>
           </View>
-        </View>
-        <FlatList
-          data={posts}
-          renderItem={({ item }) => <Post item={item} />}
-          keyExtractor={(item) => item.id}
-        ></FlatList>
-      </View>
-    </>
+        </>
+      }
+      data={posts}
+      renderItem={({ item }) => <Post item={item} />}
+      keyExtractor={(item) => item.id}
+    />
   );
 };
 

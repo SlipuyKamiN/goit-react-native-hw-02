@@ -1,17 +1,17 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PostsScreen from "../Screens/PostsScreen";
-import CreatePostsScreen from "../Screens/CreatePostsScreen";
-import ProfileScreen from "../Screens/ProfileScreen";
-import LogOutButton from "./LogOutButton";
+import PostsScreen from "../screens/PostsScreen";
+import LogOutButton from "../components/LogOutButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import CreatePostsScreen from "../screens/CreatePostsScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Tabs = createBottomTabNavigator();
 
-const Home = () => {
+const BottomTabNavigation = () => {
   const navigation = useNavigation();
 
   return (
@@ -83,7 +83,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default BottomTabNavigation;
 
 const styles = {
   tabButtonWrapper: {

@@ -37,6 +37,7 @@ export default ProfilePost;
 
 const styles = {
   postWrapper: {
+    flex: 1,
     width: "100%",
     marginBottom: 35,
   },

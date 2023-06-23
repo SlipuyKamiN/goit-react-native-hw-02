@@ -1,10 +1,15 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import {
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
 import LogOutButton from "../components/LogOutButton";
 import BgImagePath from "../images/photo-bg.jpg";
 import ProfilePost from "../components/ProfilePost";
 import { Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const posts = [
   {
@@ -32,33 +37,39 @@ const posts = [
 
 const ProfileScreen = () => {
   return (
-    <ImageBackground source={BgImagePath} style={styles.image}>
-      <View style={styles.form}>
-        <View style={styles.imageWrapper}>
-          <Image style={styles.avatarImage} />
-          <TouchableOpacity style={styles.addButton}>
-            <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
-          </TouchableOpacity>
+    <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+      <ImageBackground source={BgImagePath} style={styles.image}>
+        <View style={styles.form}>
+          <View style={styles.imageWrapper}>
+            <Image style={styles.avatarImage} />
+            <TouchableOpacity style={styles.addButton}>
+              <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
+            </TouchableOpacity>
+          </View>
+          <LogOutButton style={styles.logOutButton} />
+          <Text style={styles.screenTitle}>Natali Romanova</Text>
+          <View style={styles.postsList}>
+            {posts.map((item) => (
+              <ProfilePost item={item} key={item.id} />
+            ))}
+          </View>
         </View>
-        <LogOutButton style={styles.logOutButton} />
-        <Text style={styles.screenTitle}>Natali Romanova</Text>
-        <FlatList
-          style={styles.postsList}
-          data={posts}
-          renderItem={({ item }) => <ProfilePost item={item} />}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </ScrollView>
   );
 };
 
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  image: { flex: 1, width: "100%", justifyContent: "flex-end" },
+  image: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "flex-end",
+    paddingTop: 200,
+  },
   form: {
-    flex: 0.75,
+    width: "100%",
     position: "relative",
     backgroundColor: "#fff",
     alignItems: "center",
@@ -106,5 +117,6 @@ const styles = StyleSheet.create({
   },
   postsList: {
     width: "100%",
+    flex: 1,
   },
 });

@@ -13,7 +13,7 @@ import BgImagePath from "../images/photo-bg.jpg";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const RegistrationScreen = () => {
+const LoginScreen = () => {
   const [focusedInput, setFocusedInput] = useState(null);
   const [hidePassword, setHidePassword] = useState(true);
   const [emailText, setEmailText] = useState(null);
@@ -37,7 +37,10 @@ const RegistrationScreen = () => {
     }
 
     console.log(submitData);
-    navigation.navigate("Home");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "BottomTabNavigation" }],
+    });
     setEmailText(null);
     setPasswordText(null);
   };
@@ -124,7 +127,7 @@ const RegistrationScreen = () => {
   );
 };
 
-export default RegistrationScreen;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   screenWrapper: { flex: 1, width: "100%", justifyContent: "flex-end" },
