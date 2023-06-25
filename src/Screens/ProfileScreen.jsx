@@ -1,10 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
-import {
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native-gesture-handler";
+import { FlatList, ScrollView, TouchableOpacity } from "react-native";
 import LogOutButton from "../components/LogOutButton";
 import BgImagePath from "../images/photo-bg.jpg";
 import ProfilePost from "../components/ProfilePost";
@@ -95,7 +91,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     right: 0,
-    top: -40,
+    top: "60%",
     transform: [{ translateX: 12.5 }],
     backgroundColor: "transparent",
     borderRadius: 25,

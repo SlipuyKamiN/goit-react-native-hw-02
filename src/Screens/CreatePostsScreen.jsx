@@ -1,30 +1,59 @@
 import { Image, Keyboard } from "react-native";
-import { Touchable } from "react-native";
 import { TextInput } from "react-native";
 import { View } from "react-native";
 import { Text } from "react-native";
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+import { TouchableOpacity, TouchableWithoutFeedback } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
+import { useState } from "react";
+import { useEffect } from "react";
+
 const CreatePostsScreen = () => {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.front);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
+
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  if (hasPermission === null) {
+    return <CreatePostsScreen />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
   return (
     // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
       <View>
-        <TouchableOpacity style={styles.loadImage}>
+        <Camera style={styles.loadImage} type={type} ref={setCameraRef}>
           <Image />
-          <View style={styles.cameraIconWrapper}>
+          <TouchableOpacity
+            onClick={async () => {
+              if (cameraRef) {
+                const { uri } = await cameraRef.takePictureAsync();
+                await MediaLibrary.createAssetAsync(uri);
+              }
+            }}
+            style={styles.cameraIconWrapper}
+          >
             <FontAwesome
               name="camera"
               size={20}
               color="#BDBDBD"
               style={styles.cameraIcon}
             />
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </Camera>
         <Text style={styles.actionDescription}>Завантажте фото</Text>
         <TextInput style={styles.input} placeholder="Назва..." />
         <View style={styles.locationInputWrapper}>
