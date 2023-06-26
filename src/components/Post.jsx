@@ -1,25 +1,41 @@
 import { Image, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const Post = ({ item }) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.postWrapper}>
       <Image style={styles.image} />
       <Text style={styles.postTitle}>{item.title}</Text>
       <View style={styles.linksWrapper}>
-        <TouchableOpacity style={styles.linkWrapper}>
+        <TouchableOpacity
+          style={styles.linkWrapper}
+          onPress={() => {
+            navigation.navigate("Comments");
+          }}
+        >
           <Feather name="message-circle" size={18} color="#BDBDBD" />
           <Text style={styles.commentsCount}>{item.comments}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.linkWrapper}>
+        <TouchableOpacity
+          style={styles.linkWrapper}
+          onPress={() => {
+            navigation.navigate("Map", {
+              postLocation: item.postLocation,
+              locationTitle: item.locationTitle,
+            });
+          }}
+        >
           <Feather
             name="map-pin"
             size={18}
             color="#BDBDBD"
             style={styles.locationIcon}
           />
-          <Text style={styles.locationLink}>{item.location}</Text>
+          <Text style={styles.locationLink}>{item.locationTitle}</Text>
         </TouchableOpacity>
       </View>
     </View>

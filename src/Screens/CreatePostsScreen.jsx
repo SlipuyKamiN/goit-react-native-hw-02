@@ -7,13 +7,43 @@ import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import * as Location from "expo-location";
 
 const CreatePostsScreen = () => {
+  const navigation = useNavigation();
+  const [postName, setPostName] = useState(null);
+  const [locationTitle, setLocationTitle] = useState(null);
+  const [postLocation, setLocation] = useState(null);
+  const [photoUri, setPhotoUri] = useState("");
   const [hasPermission, setHasPermission] = useState(null);
-  const [cameraRef, setCameraRef] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.front);
+  const [type] = useState(Camera.Constants.Type.front);
+  const cameraRef = useRef();
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setLocation(coords);
+    })();
+  }, []);
+
+  const newPostData = {
+    postName,
+    locationTitle,
+    postLocation,
+    photoUri,
+  };
 
   useEffect(() => {
     (async () => {
@@ -25,58 +55,127 @@ const CreatePostsScreen = () => {
   }, []);
 
   if (hasPermission === null) {
-    return <CreatePostsScreen />;
+    return <Text>Taking permissions...</Text>;
   }
-  if (hasPermission === false) {
+  if (!hasPermission) {
     return <Text>No access to camera</Text>;
   }
 
+  const handleSubmit = async () => {
+    if (!postName) {
+      setPostName("");
+      return;
+    } else if (!locationTitle) {
+      setLocationTitle("");
+      return;
+    } else if (!photoUri) {
+      setPhotoUri("");
+      return;
+    } else if (!postLocation) {
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setLocation(coords);
+    }
+
+    console.log(newPostData);
+    navigation.navigate("Posts");
+    handleReset();
+  };
+
+  const handleReset = () => {
+    setPostName(null);
+    setLocationTitle(null);
+    setLocation(null);
+    setPhotoUri("");
+  };
+
+  const isEmpty = (inputName) => newPostData[inputName] === "";
+  const isButtonDisabled =
+    !isEmpty("postName") && !isEmpty("locationTitle") && !isEmpty("photoUri");
+
   return (
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={styles.container}>
-      <View>
-        <Camera style={styles.loadImage} type={type} ref={setCameraRef}>
-          <Image />
-          <TouchableOpacity
-            onClick={async () => {
-              if (cameraRef) {
-                const { uri } = await cameraRef.takePictureAsync();
-                await MediaLibrary.createAssetAsync(uri);
-              }
-            }}
-            style={styles.cameraIconWrapper}
-          >
-            <FontAwesome
-              name="camera"
-              size={20}
-              color="#BDBDBD"
-              style={styles.cameraIcon}
-            />
-          </TouchableOpacity>
-        </Camera>
-        <Text style={styles.actionDescription}>Завантажте фото</Text>
-        <TextInput style={styles.input} placeholder="Назва..." />
-        <View style={styles.locationInputWrapper}>
-          <Feather
-            name="map-pin"
-            size={18}
-            color="#BDBDBD"
-            style={styles.locationIcon}
-          />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <View>
+          <Camera style={styles.loadImage} type={type} ref={cameraRef}>
+            <Image />
+            <TouchableOpacity
+              onPress={async () => {
+                if (true) {
+                  const { uri } = await cameraRef.current.takePictureAsync();
+                  await MediaLibrary.createAssetAsync(uri);
+                  setPhotoUri(uri);
+                }
+              }}
+              style={styles.cameraIconWrapper}
+            >
+              <FontAwesome
+                name="camera"
+                size={20}
+                color="#BDBDBD"
+                style={styles.cameraIcon}
+              />
+            </TouchableOpacity>
+          </Camera>
+          <Text style={styles.actionDescription}>
+            {isEmpty("photoUri") ? "Завантажте фото" : "Редагувати фото"}
+          </Text>
+          {isEmpty("postName") && (
+            <Text style={styles.errorMessage}>
+              Post name is a required field!
+            </Text>
+          )}
           <TextInput
-            style={[styles.input, styles.locationInput]}
-            placeholder="Місцевість..."
+            style={styles.input}
+            placeholder="Назва..."
+            onChangeText={setPostName}
+            value={postName}
           />
+          <View style={styles.locationInputWrapper}>
+            <Feather
+              name="map-pin"
+              size={18}
+              color="#BDBDBD"
+              style={styles.locationIcon}
+            />
+            {isEmpty("locationTitle") && (
+              <Text style={styles.errorMessage}>
+                Location title is a required field!
+              </Text>
+            )}
+            <TextInput
+              style={[styles.input, styles.locationInput]}
+              placeholder="Місцевість..."
+              onChangeText={setLocationTitle}
+              value={locationTitle}
+            />
+          </View>
+          <TouchableOpacity
+            style={[
+              styles.publishButton,
+              isButtonDisabled && styles.enabledButton,
+            ]}
+            onPress={handleSubmit}
+            disabled={!isButtonDisabled}
+          >
+            <Text
+              style={[
+                styles.publishButtonText,
+                isButtonDisabled && styles.publishButtonTextEnabled,
+              ]}
+            >
+              Опублікувати
+            </Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={[styles.publishButton]}>
-          <Text style={styles.publishButtonText}>Опублікувати</Text>
+        <TouchableOpacity style={styles.removeButton} onPress={handleReset}>
+          <Feather name="trash-2" size={24} color="#DADADA" />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.removeButton}>
-        <Feather name="trash-2" size={24} color="#DADADA" />
-      </TouchableOpacity>
-    </View>
-    // </TouchableWithoutFeedback>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -178,5 +277,9 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
+  },
+  errorMessage: {
+    color: "#FF6C00",
+    marginBottom: 5,
   },
 };

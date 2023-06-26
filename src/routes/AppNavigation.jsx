@@ -21,8 +21,16 @@ const AppNavigation = () => {
           name="BottomTabNavigation"
           component={BottomTabNavigation}
         />
-        <MainStack.Screen name="Comments" component={CommentsScreen} />
-        <MainStack.Screen name="Map" component={MapScreen} />
+        <MainStack.Screen
+          name="Comments"
+          component={CommentsScreen}
+          options={{ headerShown: true }}
+        />
+        <MainStack.Screen
+          name="Map"
+          component={MapScreen}
+          options={{ headerShown: true }}
+        />
       </MainStack.Navigator>
     </NavigationContainer>
   );

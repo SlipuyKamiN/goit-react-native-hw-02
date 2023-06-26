@@ -1,10 +1,9 @@
 import { Image, ScrollView, Text, View } from "react-native";
-import CreatePostsScreen from "./CreatePostsScreen";
-import ProfileScreen from "./ProfileScreen";
 import { FlatList } from "react-native-gesture-handler";
 import Post from "../components/Post";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 const posts = [
   {
@@ -12,21 +11,33 @@ const posts = [
     title: "First Item",
     comments: 9,
     likes: 39,
-    location: "Ukraine",
+    postLocation: {
+      latitude: 55.08516365326555,
+      longitude: 14.705564406969982,
+    },
+    locationTitle: "Some title",
   },
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
     title: "Second Item",
     comments: 12,
     likes: 412,
-    location: "Ukraine",
+    postLocation: {
+      latitude: 55.08516365326555,
+      longitude: 14.705564406969982,
+    },
+    locationTitle: "Some title",
   },
   {
     id: "58694a0f-3da1-471f-bd96-145571e29d72",
     title: "Third Item",
     comments: 6,
     likes: 156,
-    location: "Ukraine",
+    postLocation: {
+      latitude: 55.08516365326555,
+      longitude: 14.705564406969982,
+    },
+    locationTitle: "Some title",
   },
 ];
 const PostsScreen = () => {
