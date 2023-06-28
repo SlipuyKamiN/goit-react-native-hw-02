@@ -6,8 +6,8 @@ import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import CreatePostsScreen from "../screens/CreatePostsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import CreatePostScreen from "../screens/CreatePostScreen";
 
 const Tabs = createBottomTabNavigator();
 
@@ -47,7 +47,7 @@ const BottomTabNavigation = () => {
       />
       <Tabs.Screen
         name="CreatePosts"
-        component={CreatePostsScreen}
+        component={CreatePostScreen}
         options={{
           title: "Створити публікацію",
           tabBarStyle: { display: "none" },

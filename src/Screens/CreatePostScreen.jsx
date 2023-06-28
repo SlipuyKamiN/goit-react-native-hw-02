@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 
-const CreatePostsScreen = () => {
+const CreatePostScreen = () => {
   const navigation = useNavigation();
   const [postName, setPostName] = useState(null);
   const [locationTitle, setLocationTitle] = useState(null);
@@ -66,6 +66,7 @@ const CreatePostsScreen = () => {
       return;
     }
     if (!postLocation) {
+      setPostLocation(null);
       return;
     }
 
@@ -81,7 +82,9 @@ const CreatePostsScreen = () => {
     setPhotoUri("");
   };
 
-  const isButtonDisabled = photoUri && postLocation;
+  console.log(postLocation);
+
+  const isButtonDisabled = photoUri;
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -163,7 +166,7 @@ const CreatePostsScreen = () => {
   );
 };
 
-export default CreatePostsScreen;
+export default CreatePostScreen;
 
 const styles = {
   container: {
@@ -261,11 +264,12 @@ const styles = {
   removeButton: {
     width: 70,
     height: 40,
-    backgroundColor: "#F6F6F6",
     borderRadius: 30,
+    marginTop: 40,
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
+    backgroundColor: "#F6F6F6",
   },
   errorMessage: {
     color: "#FF6C00",
