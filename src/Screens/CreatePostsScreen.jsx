@@ -1,4 +1,4 @@
-import { Image, Keyboard } from "react-native";
+import { Image, ImageBackground, Keyboard } from "react-native";
 import { TextInput } from "react-native";
 import { View } from "react-native";
 import { Text } from "react-native";
@@ -16,10 +16,10 @@ const CreatePostsScreen = () => {
   const navigation = useNavigation();
   const [postName, setPostName] = useState(null);
   const [locationTitle, setLocationTitle] = useState(null);
-  const [postLocation, setLocation] = useState(null);
+  const [postLocation, setPostLocation] = useState(null);
   const [photoUri, setPhotoUri] = useState("");
   const [hasPermission, setHasPermission] = useState(null);
-  const [type] = useState(Camera.Constants.Type.front);
+  const [type] = useState(Camera.Constants.Type.back);
   const cameraRef = useRef();
 
   useEffect(() => {
@@ -34,13 +34,13 @@ const CreatePostsScreen = () => {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       };
-      setLocation(coords);
+      setPostLocation(coords);
     })();
-  }, []);
+  }, [photoUri]);
 
   const newPostData = {
-    postName,
-    locationTitle,
+    postName: postName || "Без назви",
+    locationTitle: locationTitle || "Без назви",
     postLocation,
     photoUri,
   };
@@ -52,32 +52,21 @@ const CreatePostsScreen = () => {
 
       setHasPermission(status === "granted");
     })();
+
+    return handleReset;
   }, []);
 
-  if (hasPermission === null) {
-    return <Text>Taking permissions...</Text>;
-  }
   if (!hasPermission) {
     return <Text>No access to camera</Text>;
   }
 
   const handleSubmit = async () => {
-    if (!postName) {
-      setPostName("");
-      return;
-    } else if (!locationTitle) {
-      setLocationTitle("");
-      return;
-    } else if (!photoUri) {
+    if (!photoUri) {
       setPhotoUri("");
       return;
-    } else if (!postLocation) {
-      let location = await Location.getCurrentPositionAsync({});
-      const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      setLocation(coords);
+    }
+    if (!postLocation) {
+      return;
     }
 
     console.log(newPostData);
@@ -88,46 +77,45 @@ const CreatePostsScreen = () => {
   const handleReset = () => {
     setPostName(null);
     setLocationTitle(null);
-    setLocation(null);
+    setPostLocation(null);
     setPhotoUri("");
   };
 
-  const isEmpty = (inputName) => newPostData[inputName] === "";
-  const isButtonDisabled =
-    !isEmpty("postName") && !isEmpty("locationTitle") && !isEmpty("photoUri");
+  const isButtonDisabled = photoUri && postLocation;
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <View>
-          <Camera style={styles.loadImage} type={type} ref={cameraRef}>
-            <Image />
-            <TouchableOpacity
-              onPress={async () => {
-                if (true) {
-                  const { uri } = await cameraRef.current.takePictureAsync();
-                  await MediaLibrary.createAssetAsync(uri);
-                  setPhotoUri(uri);
-                }
-              }}
-              style={styles.cameraIconWrapper}
-            >
-              <FontAwesome
-                name="camera"
-                size={20}
-                color="#BDBDBD"
-                style={styles.cameraIcon}
-              />
-            </TouchableOpacity>
-          </Camera>
+          <View style={styles.loadImage}>
+            <Camera type={type} ref={cameraRef} style={{ flex: 1 }}>
+              <ImageBackground src={photoUri} style={styles.postImage}>
+                <TouchableOpacity
+                  onPress={async () => {
+                    setPhotoUri(null);
+                    if (cameraRef) {
+                      const { uri } =
+                        await cameraRef.current.takePictureAsync();
+                      await MediaLibrary.createAssetAsync(uri);
+                      setPhotoUri(uri);
+                    }
+                  }}
+                  style={styles.cameraIconWrapper}
+                >
+                  <FontAwesome
+                    name="camera"
+                    size={20}
+                    color="#BDBDBD"
+                    style={styles.cameraIcon}
+                  />
+                </TouchableOpacity>
+              </ImageBackground>
+            </Camera>
+          </View>
           <Text style={styles.actionDescription}>
-            {isEmpty("photoUri") ? "Завантажте фото" : "Редагувати фото"}
+            {!photoUri ? "Завантажте фото" : "Редагувати фото"}
           </Text>
-          {isEmpty("postName") && (
-            <Text style={styles.errorMessage}>
-              Post name is a required field!
-            </Text>
-          )}
+
           <TextInput
             style={styles.input}
             placeholder="Назва..."
@@ -141,11 +129,7 @@ const CreatePostsScreen = () => {
               color="#BDBDBD"
               style={styles.locationIcon}
             />
-            {isEmpty("locationTitle") && (
-              <Text style={styles.errorMessage}>
-                Location title is a required field!
-              </Text>
-            )}
+
             <TextInput
               style={[styles.input, styles.locationInput]}
               placeholder="Місцевість..."
@@ -200,6 +184,11 @@ const styles = {
     borderColor: "#E8E8E8",
     backgroundColor: "#f6f6f6",
     marginBottom: 8,
+    overflow: "hidden",
+  },
+  postImage: {
+    flex: 1,
+    backgroundColor: "transparent",
   },
   cameraIconWrapper: {
     position: "absolute",
