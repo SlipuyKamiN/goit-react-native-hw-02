@@ -82,7 +82,7 @@ const CreatePostScreen = () => {
     setPhotoUri("");
   };
 
-  console.log(postLocation);
+  // console.log(postLocation);
 
   const isButtonDisabled = photoUri;
 
