@@ -30,7 +30,12 @@ const CreatePostScreen = () => {
           console.log("Permission to access location was denied");
         }
 
-        let location = await Location.getCurrentPositionAsync({});
+        let location = await Location.getLastKnownPositionAsync();
+
+        if (!location) {
+          location = await Location.getCurrentPositionAsync({});
+        }
+
         const coords = {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
@@ -74,7 +79,10 @@ const CreatePostScreen = () => {
       return;
     }
     if (!postLocation) {
-      setPostLocation(null);
+      try {
+      } catch (error) {
+        console.log(error);
+      }
       return;
     }
 
