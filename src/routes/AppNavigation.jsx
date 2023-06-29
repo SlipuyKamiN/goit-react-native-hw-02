@@ -1,10 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import RegistrationScreen from "../screens/RegistrationScree";
-import LoginScreen from "../screens/LoginScree";
+import RegistrationScreen from "../screens/RegistrationScreen";
+import LoginScreen from "../screens/LoginScreen";
 import BottomTabNavigation from "./BottomTabNavigation";
-import CommentsScreen from "../screens/CommentsScree";
-import MapScreen from "../screens/MapScree";
+import CommentsScreen from "../screens/CommentsScreen";
+import MapScreen from "../screens/MapScreen";
 
 const MainStack = createStackNavigator();
 

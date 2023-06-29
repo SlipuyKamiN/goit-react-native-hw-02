@@ -1,13 +1,13 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PostsScreen from "../screens/PostsScree";
+import PostsScreen from "../screens/PostsScreen";
 import LogOutButton from "../components/LogOutButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import ProfileScreen from "../screens/ProfileScree";
-import CreatePostScreen from "../screens/CreatePostScree";
+import ProfileScreen from "../screens/ProfileScreen";
+import CreatePostScreen from "../screens/CreatePostScreen";
 
 const Tabs = createBottomTabNavigator();
 
